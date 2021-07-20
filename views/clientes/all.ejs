@@ -1,0 +1,49 @@
+<% layout('layouts/boilerplate')%>
+    <div class="row">
+        <div class="col-6 offset-3">
+            <div class="mb-3">
+                <a href="clientes/novo" class="btn btn-primary">Novo Cliente</a>
+            </div>
+
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nome</th>
+                        <th>Telefone</th>
+                        <th>Endereço</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let cliente of clientes){%>
+                        <tr data-url="/clientes/<%=cliente._id%>">
+                            <td>
+                                <%=cliente.nome%>
+                            </td>
+                            <td>
+                                <a href="whatsapp://send?phone=55<%=cliente.telefone%>&text=Oi+<%=cliente.nome%>">
+                                    <%=cliente.telefone.slice(2)%>
+                                </a>
+                            </td>
+                            <td>
+                                <%=cliente.endereco%>
+                            </td>
+                        </tr>
+                        <%}%>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let trs = document.querySelectorAll('tbody>tr');
+        for (let tr of trs) {
+            tr.onclick = () => {
+                window.location.href = tr.dataset.url;
+            }
+        }
+    </script>
+    <style>
+        tbody>tr:hover {
+            cursor: pointer;
+        }
+    </style>

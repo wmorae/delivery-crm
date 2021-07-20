@@ -1,0 +1,277 @@
+<% layout('layouts/boilerplate')%>
+    <div class="row ">
+        <div class="col-8 offset-2">
+            <h1 class="text-center">Novo pedido</h1>
+
+            <form action="/pedidos" method="POST" class="validated-form mb-3">
+
+                <div class="d-flex justify-content-evenly p-3">
+
+                    <input type="radio" class="btn-check" name="entrega" id="balcao" autocomplete="off" value="balcão"
+                        checked>
+                    <label class="btn btn-outline-success btn-lg" for="balcao">Balcão</label>
+                    <input type="radio" class="btn-check" name="entrega" id="delivery" autocomplete="off"
+                        value="delivery">
+                    <label class="btn btn-outline-danger btn-lg" for="delivery">Delivery</label>
+                </div>
+
+
+
+                <div class="mb-3">
+
+                    <label for="q">Cliente</label>
+                    <input class="form-control dropdown" type="text" id="q" name="cliente[nome]"
+                        placeholder="Telefone ou nome">
+                    <ul class="dropdown-menu " aria-labelledby="dropdownMenu2">
+                    </ul>
+
+                </div>
+                <div class="contato-info d-none">
+
+                    <div class="input-group mb-3">
+
+                        <span class="input-group-text">Telefone</span>
+                        <input class="form-control" disabled type="text" id="telefone" name="cliente[telefone]"
+                            placeholder="Apenas numeros, com ddd" style="width: 50%;">
+                        <div class="invalid-feedback">
+                            Por favor, numero com ddd no formato 41999995555
+                        </div>
+                        <span class="input-group-text">Frete</span>
+                        <span class="input-group-text">R$</span>
+                        <input class="form-control" disabled type="number" id="frete" name="cliente[frete]"
+                            placeholder="Preço frete">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Endereço</span>
+                        <input class="form-control" disabled type="text" id="endereco" name="cliente[endereco]"
+                            placeholder="Completo, com ponto de referencia">
+
+
+                    </div>
+                    <div class="mb-3 d-inline">
+                        <button id="edit" class="btn btn-primary">Editar</button>
+                    </div>
+
+                </div>
+
+                <h3 class="text-center">Pedido</h3>
+
+                <div class="d-flex justify-content-evenly itens mb-3">
+                    <button type="button" id="m_p" class="btn btn btn-primary">Marmita P</button>
+                    <button type="button" id="m_m" class="btn btn btn-primary">Marmita M</button>
+                    <button type="button" id="m_g" class="btn btn btn-primary">Marmita G</button>
+                    <button type="button" id="m_o" class="btn btn btn-primary">Outro</button>
+                </div>
+
+
+                <div class="pedidos mb-3">
+
+                </div>
+
+                <div class="d-flex justify-content-evenly mb-5">
+                    <div>
+                        <input type="radio" class="btn-check" name="pagamento[metodo]" id="dinheiro" autocomplete="off"
+                            value="dinheiro" checked>
+                        <label class="btn btn-outline-success " for="dinheiro">Dinheiro</label>
+                    </div>
+
+                    <div>
+                        <input type="radio" class="btn-check" name="pagamento[metodo]" id="pix" autocomplete="off"
+                            value="pix">
+                        <label class="btn btn-outline-success " for="pix">Pix</label>
+                    </div>
+                    <div>
+                        <input type="radio" class="btn-check" name="pagamento[metodo]" id="cartao" autocomplete="off"
+                            value="cartão">
+                        <label class="btn btn-outline-success " for="cartao">Cartão</label>
+                    </div>
+
+                </div>
+
+                <div class="d-flex justify-content-evenly">
+                    <button id="fechar" disabled class="btn btn-lg btn-primary ">Fechar Pedido</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let dropdown = document.querySelector(".dropdown-menu");
+        let pesquisar = async function (q) {
+            let res = await axios.get("/search?q=" + q);
+            return (res.data)
+        }
+        let additem = function (element, ind = true) {
+            let item = document.createElement('li');
+            item.innerHTML = element;
+            if (ind)
+                dropdown.prepend(item)
+            else
+                dropdown.append(item)
+
+        };
+        let addcontato = function (contato) {
+            let element = '<button class="dropdown-item d-flex justify-content-evenly contato" type="button" ><span class="p-1">' + contato.nome + '</span > <span class="p-1">' + contato.telefone + '</span></button > '
+            let item = document.createElement('li');
+            item.innerHTML = element;
+            item.onclick = function () {
+                document.querySelector("#q").value = contato.nome;
+                document.querySelector("#telefone").value = contato.telefone;
+                document.querySelector("#endereco").value = contato.endereco;
+                document.querySelector("#frete").value = contato.frete;
+                // document.querySelectorAll("div.contato-info").forEach(div => div.classList.remove("d-none"));
+            }
+            dropdown.append(item)
+
+        }
+
+        additem('<a class="dropdown-item" id="novocontato" type="button"><span class="p-1">+ Novo Contato</span></a>', true);
+        additem('    <hr class="dropdown-divider">', false);
+        let y = async function () {
+            let el = document.querySelector('#q');
+            for (let e of document.querySelectorAll(".dropdown-menu > li .contato")) {
+                e.remove();
+            }
+            if (el.value) {
+                let res = await pesquisar(el.value);
+
+                if (!res.length)
+                    additem('<button class="dropdown-item disabled contato"href="#" tabindex="-1" aria-disabled="true">Sem Resultados</button >', false)
+
+                res.forEach(contato => {
+                    addcontato(contato);
+                })
+            } else {
+
+                additem('<button class="dropdown-item disabled contato"href="#" tabindex="-1" aria-disabled="true">Pesquise um nome ou telefone</button > ', false);
+
+            }
+
+
+
+            el.oninput = x;
+            dropdown.classList.add("show");
+
+
+        }
+        let x = function () {
+            document.querySelector('#q').oninput = null;
+            dropdown.classList.remove("show");
+            setTimeout(y, 750);
+        };
+
+        document.querySelector('#q').oninput = x;
+        document.querySelector('#q').onfocus = y
+        document.querySelector('#q').onblur = () => {
+            setTimeout(() => dropdown.classList.remove("show"), 350);
+        };
+
+        document.querySelector("#edit").onclick = function () {
+            this.disabled = true;
+            document.querySelectorAll(".contato-info  input").forEach(input => input.disabled = false)
+        }
+        document.querySelector("#novocontato").onclick = function () {
+            //document.querySelectorAll("div.contato-info").forEach(div => div.classList.remove("d-none"));
+            document.querySelector("#q").placeholder = "Nome e sobrenome";
+            document.querySelector("#telefone").value = 41;
+            document.querySelector("#edit").onclick();
+
+        }
+        // let comandaitem = document.querySelector(".pedido").cloneNode(true);
+        // document.querySelector(".pedido").remove();
+        let i = 0;
+        let comandaAdd = function (marmita, preco = 0) {
+            let template = `<div class="pedido card p-2 d-flex flex-row flex-nowrap justify-content-evenly">
+                            <div class="flex-grow-1">
+                                <div class="input-group mb-1">
+                                    <input type="number" id="qty" name="itens[${i}][qty]"  class="form-control" value="1">
+                                  
+                                    <input name="itens[${i}][desc]" style="width:25%" class="form-control marmita" list="listMarmitas"
+                                        id="Marmitas" placeholder="Digite o Item">
+                                    <datalist id="listMarmitas">
+                                        <option value="Marmita P">
+                                        <option value="Marmita M">
+                                        <option value="Marmita G">
+                                        <option value="Outros">
+                                    </datalist>
+                                 
+                                    <input name="itens[${i}][prot]" style="width:25%" class="form-control proteina" list="listProteinas"
+                                        id="Proteinas" placeholder="Proteina..">
+                                    <datalist id="listProteinas">
+                                        <option value="Bisteca">
+                                        <option value="Peito Grelhado">
+                                        <option value="Peito Milanesa">
+                                        <option value="Outros">
+                                    </datalist>
+
+                                </div>
+                                <div class="input-group">
+                                    <input name="itens[${i}][obs]" style="width:50%" type="text" class="form-control obs"
+                                        placeholder="Observações"  value="Completa">
+                                    <span class="input-group-text mb-8">Valor Und. R$</span>
+                                    <input name="itens[${i}][valor]" type="number" class="form-control preco">
+                                </div>
+
+                            </div>
+                            <button type="button" class="delete btn btn-outline-danger flex-grow-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                                    class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path
+                                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z">
+                                    </path>
+                                    <path fill-rule="evenodd"
+                                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z">
+                                    </path>
+                                </svg>
+                            </button>
+
+
+
+                        </div>`
+            let cont = document.querySelector('.pedidos');
+            let element = document.createElement('div')
+            element.innerHTML = template;
+            element.querySelector(".marmita").value = marmita
+            element.querySelector(".preco").value = preco
+            element.querySelector(".delete").onclick = function () {
+                this.parentElement.remove()
+            }
+            cont.prepend(element)
+            document.querySelector("#fechar").disabled = false;
+            window.scrollTo(0, document.body.scrollHeight);
+            i++;
+        }
+
+        document.querySelector("#m_p").onclick = () => comandaAdd('Marmita P', 7)
+        document.querySelector("#m_m").onclick = () => comandaAdd('Marmita M', 10)
+        document.querySelector("#m_g").onclick = () => comandaAdd('Marmita G', 13)
+        document.querySelector("#m_o").onclick = () => comandaAdd('Outros')
+
+        document.querySelector("#fechar").onclick = () => {
+            // document.querySelectorAll(".contato-info input").forEach(el => el.disabled = false)
+        }
+
+        document.querySelector("#delivery").onclick = () => {
+            document.querySelectorAll(".contato-info input").forEach(el => {
+                el.required = true
+                el.disabled = false
+            })
+            document.querySelectorAll("div.contato-info").forEach(div => div.classList.remove("d-none"));
+        }
+        document.querySelector("#balcao").onclick = () => {
+            document.querySelectorAll(".contato-info input").forEach(el => {
+                el.required = false
+                el.disabled = true
+            })
+            document.querySelectorAll("div.contato-info").forEach(div => div.classList.add("d-none"));
+        }
+
+        let btn = document.querySelector("#fechar")
+        document.querySelector('form').onsubmit = () => {
+            btn.disabled = true;
+            btn.innerText = "Processando..."
+        }
+
+
+    </script>

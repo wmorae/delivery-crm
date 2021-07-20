@@ -1,0 +1,112 @@
+<% layout('layouts/boilerplate')%>
+    <div class="row">
+        <div class="col-8 offset-2">
+
+            <table class="table d-inline table-sm  mb-3">
+                <tbody class=" mb-3">
+                    <tr>
+                        <th>Dinheiro</th>
+                        <td>R$<%=pedidos.filter(x=> x.pagamento.metodo == "dinheiro").map(x=>
+                                x.pagamento.total).reduce((total,n)=> total+n,0)%></td>
+                    </tr>
+                    <tr>
+                        <th>Cartão</th>
+                        <td>R$<%=pedidos.filter(x=> x.pagamento.metodo == "cartão").map(x=>
+                                x.pagamento.total).reduce((total,n)=> total+n,0)%></td>
+                    </tr>
+                    <tr>
+                        <th>Pix</th>
+                        <td>R$<%=pedidos.filter(x=> x.pagamento.metodo == "pix").map(x=>
+                                x.pagamento.total).reduce((total,n)=> total+n,0)%> </td>
+                    </tr>
+                    <tr>
+                        <th>Total Entregas</th>
+                        <td>R$<%=pedidos.map(i=> i.cliente.frete).reduce( (total,num) => total+num,0)%></td>
+                    </tr>
+                    <tr>
+                        <th>Total</th>
+                        <td>R$<%=pedidos.map(i=> i.pagamento.total).reduce( (total,num) => total+num,0)%></td>
+                    </tr>
+                </tbody>
+
+            </table>
+            <form action="/pedidos" method="GET" class="m-3 d-inline">
+                <label for="data">Data:</label>
+                <input type="date" name="data" id="data" value="<%=data%>">
+                <button class="btn btn-primary">Filtrar</button>
+            </form>
+            <div class="m-2">
+                <a href="pedidos/novo" class="btn btn-primary">Novo Pedido</a>
+            </div>
+
+            <table class="table table-hover ">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th>Numero</th>
+                        <th>Hora</th>
+                        <th>Status</th>
+                        <th>Nome</th>
+                        <th>Telefone</th>
+                        <th>Entrega</th>
+                        <th>Pagamento</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody class="pedidos">
+                    <% for(let pedido of pedidos){%>
+                        <tr data-url="/pedidos/<%=pedido._id%>">
+                            <td>
+                                #<%=pedido.numero%>
+                            </td>
+                            <td>
+                                <%=helper.formatHour(pedido.data)%>
+                            </td>
+                            <td>
+                                <%=pedido.status%>
+                            </td>
+                            <td>
+                                <%=pedido.cliente.nome%>
+                            </td>
+                            <td>
+                                <%if(pedido.entrega=="delivery"){%>
+                                    <a
+                                        href="whatsapp://send?phone=55<%=pedido.cliente.telefone%>&text=Oi+<%=pedido.cliente.nome%>">
+                                        <%=pedido.cliente.telefone%>
+                                    </a>
+                                    <%}else{%>
+                                        <span>-</span>
+                                        <%}%>
+
+                            </td>
+                            <td>
+                                <%=pedido.entrega%>
+                            </td>
+                            <td>
+                                <%=pedido.pagamento.metodo%>
+                            </td>
+                            <td>
+                                R$<%=pedido.pagamento.total%>
+                            </td>
+
+                        </tr>
+                        <%}%>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    <script>
+        let trs = document.querySelectorAll('tbody.pedidos>tr');
+        for (let tr of trs) {
+            tr.onclick = () => {
+                window.location.href = tr.dataset.url;
+            }
+        }
+    </script>
+    <style>
+        .pedidos>tr:hover {
+            cursor: pointer;
+        }
+    </style>

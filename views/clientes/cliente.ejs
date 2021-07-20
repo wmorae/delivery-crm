@@ -1,0 +1,128 @@
+<% layout('layouts/boilerplate')%>
+
+    <div class="row">
+
+        <div class="col-8 offset-2">
+            <h1 class="mb-5">
+                <%=cliente.nome %>
+            </h1>
+            <form id="contato" action="/clientes/<%=cliente._id%>?_method=PATCH" method="POST" novalidate
+                class="validated-form">
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Nome</span>
+                    <input class="form-control" disabled type="text" id="nome" name="cliente[nome]"
+                        value="<%=cliente.nome %>" placeholder="Nome e sobrenome" required>
+                    <div class="invalid-feedback">
+                        Por favor, nome e sobrenome
+                    </div>
+                    <span class="input-group-text">Telefone</span>
+                    <input class="form-control" disabled type="text" id="telefone" name="cliente[telefone]"
+                        placeholder="Apenas numeros, com ddd" required value="<%=cliente.telefone %>">
+                    <div class="invalid-feedback">
+                        Por favor, numero com ddd no formato 41999995555
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Endereço</span>
+                    <input class="form-control" disabled type="text" id="endereco" name="cliente[endereco]"
+                        value="<%=cliente.endereco %>" placeholder="Completo, com ponto de referencia" required
+                        style="width: 50%;">
+                    <span class="input-group-text">Frete</span>
+                    <span class="input-group-text">R$</span>
+                    <input class="form-control" disabled type="number" id="frete" name="cliente[frete]"
+                        value="<%=cliente.frete %>" placeholder="Preço frete" required>
+
+                </div>
+            </form>
+
+            <div class="mb-3">
+                <div class="d-inline">
+                    <a href="/clientes" class="btn btn-secondary">Voltar</a>
+                </div>
+                <div class="d-inline">
+                    <button id="save" class="btn btn-success d-none">Salvar</button>
+                </div>
+
+                <form class="d-inline" action="/clientes/<%=cliente._id%>?_method=DELETE" method="POST">
+                    <button class="btn btn-danger d-none"
+                        onclick="return confirm('Tem certeza que quer apagar esse contato?');">Apagar</button>
+                </form>
+
+                <div class="d-inline">
+                    <button id="edit" class="btn btn-primary">Editar</button>
+                </div>
+            </div>
+
+
+            <div class="m-2">
+                <h3 class="m-3 d-inline">Pedidos:</h3>
+                <a href="/pedidos/novo" class="btn btn-primary">Novo Pedido</a>
+
+            </div>
+            <table class="table table-hover ">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th>Data</th>
+                        <th>Entrega</th>
+                        <th>Pagamento</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody class="pedidos">
+                    <% for(let pedido of pedidos){%>
+                        <tr data-url="/pedidos/<%=pedido._id%>">
+
+                            <td>
+                                <%=helper.formatDate(pedido.data)%>
+                            </td>
+                            <td>
+                                <%=pedido.entrega%>
+                            </td>
+                            <td>
+                                <%=pedido.pagamento.metodo%>
+                            </td>
+                            <td>
+                                R$<%=pedido.pagamento.total%>
+                            </td>
+
+                        </tr>
+                        <%}%>
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+    <h2></h2>
+
+    <script>
+        document.querySelector("#edit").onclick = function () {
+            let btns = document.querySelectorAll('button.btn');
+            for (let btn of btns) {
+                btn.classList.toggle('d-none')
+            }
+            btns = document.querySelectorAll('input.form-control')
+            for (let input of btns) {
+                input.disabled = false;
+            }
+        }
+        document.querySelector('#save').onclick = () => {
+            document.querySelector('#contato').submit();
+        }
+
+    </script>
+
+    <script>
+        let trs = document.querySelectorAll('tbody.pedidos>tr');
+        for (let tr of trs) {
+            tr.onclick = () => {
+                window.location.href = tr.dataset.url;
+            }
+        }
+    </script>
+    <style>
+        .pedidos>tr:hover {
+            cursor: pointer;
+        }
+    </style>

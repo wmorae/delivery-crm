@@ -1,0 +1,37 @@
+<% layout('layouts/boilerplate')%>
+    <div class="row">
+        <div class="col-8 offset-2">
+            <form action="/clientes" method="POST" novalidate class="validated-form">
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Nome</span>
+                    <input class="form-control" type="text" id="nome" name="cliente[nome]"
+                        placeholder="Nome e sobrenome" required>
+                    <div class="invalid-feedback">
+                        Por favor, nome e sobrenome
+                    </div>
+                    <span class="input-group-text">Telefone</span>
+                    <input class="form-control" type="text" id="telefone" name="cliente[telefone]"
+                        placeholder="Apenas numeros, com ddd" required value="41">
+                    <div class="invalid-feedback">
+                        Por favor, numero com ddd no formato 41999995555
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Endereço</span>
+                    <input class="form-control" type="text" id="endereco" name="cliente[endereco]"
+                        placeholder="Completo, com ponto de referencia" required style="width: 50%;">
+                    <span class="input-group-text">Frete</span>
+                    <span class="input-group-text">R$</span>
+                    <input class="form-control" type="number" id="frete" name="cliente[frete]" placeholder="Preço frete"
+                        required>
+
+                </div>
+                <div class="mb-3 d-inline">
+                    <button class="btn btn-success">Salvar Contato</button>
+                </div>
+                <div class="mb-3 d-inline">
+                    <a href="/clientes" class="btn btn-secondary">Contatos</a>
+                </div>
+            </form>
+        </div>
+    </div>
