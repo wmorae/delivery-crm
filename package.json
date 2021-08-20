@@ -4,7 +4,8 @@
   "description": "Software\b\u001b[C de cadastro e impressão de pedidos desenvolvido em node, mongo,bootstrap e ejs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+     "start": "node index.js"
   },
   "author": "Wendrel Moraes 2021",
   "license": "ISC",
