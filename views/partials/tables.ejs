@@ -1,0 +1,13 @@
+<script>
+    let trs = document.querySelectorAll('tbody.pedidos>tr');
+    for (let tr of trs) {
+        tr.onclick = () => {
+            window.location.href = tr.dataset.url;
+        }
+    }
+</script>
+<style>
+    .pedidos>tr:hover {
+        cursor: pointer;
+    }
+</style>

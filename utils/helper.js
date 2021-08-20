@@ -38,8 +38,29 @@ Date.prototype.addDays = function (days) {
     return date;
 }
 
+let resumoPedidos = function (pedidos) {
+    let arr = []
+    for (let pedido of pedidos) {
+        for (let item of pedido.itens) {
+            if (arr[item.desc]) {
+                arr[item.desc].qty += item.qty
+                arr[item.desc].valor += item.valor
+            }
+            else {
+                arr[item.desc] = {}
+                arr[item.desc].qty = item.qty
+                arr[item.desc].valor = item.valor
+            }
+        }
+
+    }
+    // arr.sort((a, b) => b.qty - a.qty)
+    return arr
+}
+
 module.exports = {
     formatDate: formatDate,
     formatDate2: formatDate2,
-    formatHour: formatHour
+    formatHour: formatHour,
+    indexPedidos: resumoPedidos
 };

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="icon" href="/img/abba.webp">
+    <title>Cantina da Aba</title>
+</head>
+
+<body class="d-flex flex-column vh-100">
+    <!-- Sistema Web Gerenciador de relacionamento com clientes desenvolvido e implementado por Wendrel Moraes Linkedin: linkedin.com/in/wendrel-moraes-3bb5a7203/ -->
+
+    <%- include('../partials/flash')%>
+
+        <main class="container mt-5">
+            <main class="row">
+                <form action="/login" method="POST"
+                    class="validated-form col-md-4 offset-md-4 d-flex flex-column justify-content-center text-center"
+                    novalidate>
+                    <div style=" width: 80%; height: 200px; margin-left: 10%;">
+                        <img id="abba" class="img-fluid troca" alt="">
+                    </div>
+                    <h1 class="display-4">Cantina da Aba</h1>
+                    <div class="my-3">
+                        <input class="form-control rounded-pill px-4" type="text" id="username" placeholder="Usuario"
+                            name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <input class="form-control rounded-pill px-4" type="password" placeholder="Senha" id="password"
+                            name="password" required>
+                    </div>
+                    <button class="btn btn-success rounded-pill">Entrar</button>
+                </form>
+            </main>
+        </main>
+
+        <div class="scene-container">
+            <div id="scene" class="scene">
+                <div data-depth="1">
+                    <img src="/img/first_layer_login.png">
+                </div>
+                <div data-depth="2">
+                    <img src="/img/second_layer_login.png">
+                </div>
+                <div data-depth="3">
+                    <img src="/img/third_layer_login.png">
+                </div>
+                <div data-depth="4">
+                    <img src="/img/fourth_layer_login.png">
+                </div>
+
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/parallax/3.1.0/parallax.min.js"></script>
+        <script>
+            let scene = document.getElementById('scene');
+            let parallax = new Parallax(scene);
+        </script>
+
+
+        <style>
+            body {
+                background: linear-gradient(#0077b6, #ade8f4);
+            }
+
+            .btn-success {
+                background-color: #0077b6;
+                border-color: #caf0f8;
+            }
+
+            .btn-success:hover {
+                background-color: #caf0f8;
+                border-color: #03045e;
+                color: #03045e;
+            }
+
+            h1 {
+                color: #caf0f8;
+            }
+        </style>
+        <link rel="stylesheet" href="/styles/abbaimg.css">
+        <link rel="stylesheet" href="/styles/paralax.css">
+        <script>
+            document.querySelector('img.troca').onclick = function () {
+                if (this.id == "abba") {
+                    this.id = "abbalove"
+                    setTimeout(function () { document.querySelector('img.troca').id = "abba" }, Math.floor(5000 * Math.random()))
+                }
+
+
+
+            }
+        </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+            integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
+            integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
+            crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>

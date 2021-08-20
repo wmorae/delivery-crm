@@ -1,96 +1,120 @@
 <% layout('layouts/boilerplate')%>
-
-    <body>
-        <div class=" col-6 offset-3  mb-5" id="comanda" style="width: 47mm; font-family: monospace; font-size: small; ">
-            <h2 class="text-center text-nowrap">
-                #<%=pedido.numero%> <span>
-                        <%=pedido.entrega%>
-                    </span>
-            </h2>
-            <hr>
-            <h6>
-                <%=pedido.cliente.nome%>
-
-            </h6>
-            <% if(pedido.entrega=="delivery" ) {%>
-                <h6>
-                    <%=pedido.cliente.telefone%>
+    <div class="container">
+        <div class="row">
+            <div class=" col-6 offset-3  mb-2" id="comanda"
+                style="width: 47mm; font-family: monospace; font-size: small; ">
+                <h6 style="margin: 0%;">
+                    <%=helper.formatDate(pedido.data) %>
                 </h6>
-                <%}%>
-                    <p>
-                        <%=pedido.cliente.endereco%>
-                    </p>
-                    <hr>
-                    <table class="table text-center table-sm ">
-                        <thead>
-                            <th>Qty</th>
-                            <th>Desc</th>
-                            <th>V.Und</th>
-                        </thead>
-                        <tbody>
-                            <%for(let item of pedido.itens){%>
-                                <tr>
-                                    <td class="text-center">
-                                        <%=item.qty%>
-                                    </td>
-                                    <td>
-                                        <%=item.desc%>
-                                    </td>
+                <h2 class="text-center text-nowrap">
+                    #<%=pedido.numero%> <span>
+                            <%=pedido.entrega%>
+                        </span>
+                </h2>
+                <hr>
+                <h6>
+                    <%=pedido.cliente.nome%>
 
-                                    <td>
-                                        R$<%=item.valor%>
+                </h6>
+                <% if(pedido.entrega=="delivery" ) {%>
+                    <h6>
+                        <%=pedido.cliente.telefone%>
+                    </h6>
+                    <%}%>
+                        <p>
+                            <%=pedido.cliente.endereco%>
+                        </p>
+                        <hr>
+                        <table class="table text-center table-sm ">
+                            <thead>
+                                <th>Qty</th>
+                                <th>Desc</th>
+                                <th>V.Und</th>
+                            </thead>
+                            <tbody>
+                                <%for(let item of pedido.itens){%>
+                                    <tr>
+                                        <td class="text-center">
+                                            <%=item.qty%>
+                                        </td>
+                                        <td>
+                                            <%=item.desc%>
+                                        </td>
+
+                                        <td>
+                                            R$<%=item.valor%>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class=" text-center" colspan="3">
+                                            <%=item.prot + " " +item.obs%>
+                                        </td>
+                                    </tr>
+                                    <%}%>
+
+                            </tbody>
+
+                        </table>
+                        <hr>
+                        <table>
+                            <tbody class="text-start">
+                                <tr>
+                                    <th>Total itens:</th>
+                                    <td>R$<%=pedido.pagamento.subtotal%>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class=" text-center" colspan="3">
-                                        <%=item.prot + " " +item.obs%>
+                                    <th>Taxa entrega:</th>
+                                    <td>R$<%=pedido.cliente.frete%>
                                     </td>
                                 </tr>
-                                <%}%>
+                                <tr>
+                                    <th>Total:</th>
+                                    <td>R$<%=pedido.pagamento.total%>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr>
 
-                        </tbody>
+                        <h4>
+                            <%=pedido.pagamento.metodo%>
+                        </h4>
+                        <%if(pedido.pagamento.trocopara){%>
+                            <table>
+                                <tr>
+                                    <td>
+                                        Troco para
+                                    </td>
+                                    <td class="fw-bold">
+                                        R$<%=pedido.pagamento.trocopara%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Troco
+                                    </td>
+                                    <td class="fw-bold">
+                                        R$<%=pedido.pagamento.troco%>
+                                    </td>
+                                </tr>
+                            </table>
+                            <%}%>
 
-                    </table>
-                    <hr>
-                    <table>
-                        <tbody class="text-start">
-                            <tr>
-                                <th>Total itens:</th>
-                                <td>R$<%=pedido.pagamento.subtotal%>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Taxa entrega:</th>
-                                <td>R$<%=pedido.cliente.frete%>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Total:</th>
-                                <td>R$<%=pedido.pagamento.total%>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <hr>
-
-                    <h4>
-                        <%=pedido.pagamento.metodo%>
-                    </h4>
-                    <%if(pedido.pagamento.metodo=="dinheiro"){%>
-                        <!-- <h2>Troco para <span>R$50,00</span></h2> -->
-                        <%}%>
-
-        </div>
-        <div class="col-6 offset-3 mb-5 p-3">
-            <div class="btn btn-primary" onclick="print()">Imprimir</div>
-            <a href="/pedidos" class="btn btn-secondary">Pedidos</a>
-            <form class="d-inline" action="/pedidos/<%=pedido._id%>?_method=DELETE" method="POST">
-                <button class="btn btn-danger"
-                    onclick="return confirm('Tem certeza que quer apagar esse pedido?');">Apagar</button>
-            </form>
+            </div>
         </div>
 
-    </body>
+
+    </div>
+    <div class="col-6 offset-3 mb-2 p-3 d-flex flex-row justify-content-center ">
+        <div class="btn btn-primary" onclick="print()">Imprimir</div>
+        <a href="/pedidos" class="btn btn-secondary">Pedidos</a>
+        <form class="d-inline" action="/pedidos/<%=pedido._id%>?_method=DELETE" method="POST">
+            <button class="btn btn-danger"
+                onclick="return confirm('Tem certeza que quer apagar esse pedido?');">Apagar</button>
+        </form>
+    </div>
+
     <style>
         #comanda * {
             font-weight: bolder;
@@ -120,7 +144,7 @@
             }
         }
     </style>
-    <%if(pedido.imprimir){%>
+    <%if(success&&success.length){%>
         <script>
             window.onload = print();
         </script>

@@ -1,9 +1,55 @@
 <% layout('layouts/boilerplate')%>
     <div class="row">
-        <div class="col-8 offset-2">
+        <div class="col-lg-4">
+            <!-- <div class=" d-lg-none">
+                <a href="pedidos/novo" class="btn btn-primary d-block">Novo Pedido</a>
+            </div> -->
+            <form action="/pedidos" method="GET" class="m-3 ">
+                <label for="data">Data:</label>
+                <input type="date" name="data" id="data" value="<%=data%>">
+                <button class="btn btn-primary ">Filtrar</button>
+            </form>
+            <table class="table table-sm mb-3">
+                <thead>
+                    <tr>
+                        <th colspan="100%">
+                            Totais por produto
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Qty</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let i in pedidosIndex){ %>
+                        <tr>
+                            <td>
+                                <%=i%>
+                            </td>
+                            <td>
+                                <%=pedidosIndex[i].qty %>
+                            </td>
+                            <td>
+                                R$<%=pedidosIndex[i].valor %>
+                            </td>
 
-            <table class="table d-inline table-sm  mb-3">
-                <tbody class=" mb-3">
+                        </tr>
+                        <% } %>
+                </tbody>
+            </table>
+            <script>
+                let pedidos = <%- JSON.stringify(pedidos) %>
+            </script>
+            <table class="table table-sm  mb-3">
+                <thead>
+                    <th colspan="100%">
+                        Totais por pagamento
+                    </th>
+                </thead>
+                <tbody>
+
                     <tr>
                         <th>Dinheiro</th>
                         <td>R$<%=pedidos.filter(x=> x.pagamento.metodo == "dinheiro").map(x=>
@@ -30,83 +76,79 @@
                 </tbody>
 
             </table>
-            <form action="/pedidos" method="GET" class="m-3 d-inline">
-                <label for="data">Data:</label>
-                <input type="date" name="data" id="data" value="<%=data%>">
-                <button class="btn btn-primary">Filtrar</button>
-            </form>
-            <div class="m-2">
-                <a href="pedidos/novo" class="btn btn-primary">Novo Pedido</a>
-            </div>
 
-            <table class="table table-hover ">
+        </div>
+        <div class="col-lg-8 ">
+
+
+
+            <table class="table table-sm table-responsive table-hover ">
 
                 <thead class="table-dark">
                     <tr>
-                        <th>Numero</th>
+                        <th>#N°</th>
                         <th>Hora</th>
-                        <th>Status</th>
+                        <!-- <th>Status</th> -->
                         <th>Nome</th>
-                        <th>Telefone</th>
+                        <th class="d-none d-lg-block">Telefone</th>
                         <th>Entrega</th>
-                        <th>Pagamento</th>
+                        <th class="d-none d-lg-block">Pagamento</th>
                         <th>Total</th>
                     </tr>
                 </thead>
-                <tbody class="pedidos">
-                    <% for(let pedido of pedidos){%>
-                        <tr data-url="/pedidos/<%=pedido._id%>">
-                            <td>
-                                #<%=pedido.numero%>
-                            </td>
-                            <td>
-                                <%=helper.formatHour(pedido.data)%>
-                            </td>
-                            <td>
-                                <%=pedido.status%>
-                            </td>
-                            <td>
-                                <%=pedido.cliente.nome%>
-                            </td>
-                            <td>
-                                <%if(pedido.entrega=="delivery"){%>
-                                    <a
-                                        href="whatsapp://send?phone=55<%=pedido.cliente.telefone%>&text=Oi+<%=pedido.cliente.nome%>">
-                                        <%=pedido.cliente.telefone%>
-                                    </a>
-                                    <%}else{%>
-                                        <span>-</span>
-                                        <%}%>
+                <% if(pedidos.length){ %>
+                    <tbody class="pedidos">
+                        <% for(let pedido of pedidos){%>
+                            <tr data-url="/pedidos/<%=pedido._id%>">
+                                <td>
+                                    <span class="badge rounded-pill bg-primary">
+                                        #<%=pedido.numero%>
+                                    </span>
 
-                            </td>
-                            <td>
-                                <%=pedido.entrega%>
-                            </td>
-                            <td>
-                                <%=pedido.pagamento.metodo%>
-                            </td>
-                            <td>
-                                R$<%=pedido.pagamento.total%>
-                            </td>
+                                </td>
+                                <td>
+                                    <%=helper.formatHour(pedido.data)%>
+                                </td>
+                                <!-- <td>
+                                pedido.status
+                            </td> -->
+                                <td>
+                                    <%=pedido.cliente.nome%>
+                                </td>
+                                <td class="d-none d-lg-block">
+                                    <%if(pedido.entrega=="delivery"){%>
+                                        <a
+                                            href="whatsapp://send?phone=55<%=pedido.cliente.telefone%>&text=Oi+<%=pedido.cliente.nome%>">
+                                            <%=pedido.cliente.telefone%>
+                                        </a>
+                                        <%}else{%>
+                                            <span>-</span>
+                                            <%}%>
 
-                        </tr>
-                        <%}%>
-                </tbody>
+                                </td>
+                                <td class="<%=pedido.entrega%>">
+                                    <%=pedido.entrega%>
+                                </td>
+                                <td class="<%=pedido.pagamento.metodo%> d-none d-lg-block">
+                                    <%=pedido.pagamento.metodo%>
+                                </td>
+                                <td>
+                                    R$<%=pedido.pagamento.total%>
+                                </td>
+
+                            </tr>
+                            <%}%>
+                    </tbody>
+                    <% }else{ %>
+                        <tbody>
+                            <tr>
+                                <td colspan="100%"><span class="lead text-center">Nada para ver aqui...</span></td>
+                            </tr>
+                            <% } %>
+                        </tbody>
             </table>
 
         </div>
     </div>
-
-    <script>
-        let trs = document.querySelectorAll('tbody.pedidos>tr');
-        for (let tr of trs) {
-            tr.onclick = () => {
-                window.location.href = tr.dataset.url;
-            }
-        }
-    </script>
-    <style>
-        .pedidos>tr:hover {
-            cursor: pointer;
-        }
-    </style>
+    <link rel="stylesheet" href="/styles/metodos.css">
+    <%- include('../partials/tables')%>

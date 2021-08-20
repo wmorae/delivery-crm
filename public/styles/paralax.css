@@ -1,0 +1,14 @@
+
+            .scene-container {
+                position: fixed;
+                top: -250px;
+                z-index: -5
+            }
+
+            #scene div {
+                display: block;
+            }
+
+            #scene img {
+                height: calc(100vh + 595px);
+            }

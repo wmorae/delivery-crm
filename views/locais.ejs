@@ -1,0 +1,29 @@
+<% layout('layouts/boilerplate')%>
+
+    <h1>Resultados para:</h1>
+    <p>
+        <%=q %>
+    </p>
+    <div id="map" style="width: 100%; height: 300px;"></div>
+    <ol>
+
+
+        <% for(let local of geoData.body.features){ %>
+            <li>
+                <h6>
+                    <%=local.text %> (<%=local.relevance %>)
+                </h6>
+                <p>
+                    <%=local.place_name %>
+                </p>
+            </li>
+            <% } %>
+
+    </ol>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.js"></script>
+    <script>
+        const mapToken = '<%- process.env.MAPBOX_TOKEN %>'
+        const clusterData = <%- JSON.stringify(geoData.body) %>
+    </script>
+    <script src="/script/clusterMap.js"></script>

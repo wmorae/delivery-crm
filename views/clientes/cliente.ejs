@@ -1,11 +1,10 @@
 <% layout('layouts/boilerplate')%>
-
     <div class="row">
-
-        <div class="col-8 offset-2">
-            <h1 class="mb-5">
+        <div class="col-lg-6">
+            <h1 class="mb-3">
                 <%=cliente.nome %>
             </h1>
+            <div id="map" class="mb-1" style="width: 100%; height: 300px;"></div>
             <form id="contato" action="/clientes/<%=cliente._id%>?_method=PATCH" method="POST" novalidate
                 class="validated-form">
                 <div class="input-group mb-3">
@@ -29,10 +28,11 @@
                         style="width: 50%;">
                     <span class="input-group-text">Frete</span>
                     <span class="input-group-text">R$</span>
-                    <input class="form-control" disabled type="number" id="frete" name="cliente[frete]"
+                    <input class="form-control" disabled step="0.01" type="number" id="frete" name="cliente[frete]"
                         value="<%=cliente.frete %>" placeholder="Preço frete" required>
 
                 </div>
+                <input type="hidden" name="confirmlocation" id="confirmlocation">
             </form>
 
             <div class="mb-3">
@@ -51,15 +51,22 @@
                 <div class="d-inline">
                     <button id="edit" class="btn btn-primary">Editar</button>
                 </div>
+                <% if(info&&info.length){ %>
+                    <div class="d-inline">
+                        <button class="btn btn-success" id="lolconfirm">Confirmar Localização</button>
+                    </div>
+                    <% } %>
             </div>
+        </div>
+
+        <div class="col-lg-6">
 
 
             <div class="m-2">
                 <h3 class="m-3 d-inline">Pedidos:</h3>
-                <a href="/pedidos/novo" class="btn btn-primary">Novo Pedido</a>
 
             </div>
-            <table class="table table-hover ">
+            <table class="table table-sm table-hover ">
 
                 <thead class="table-dark">
                     <tr>
@@ -76,10 +83,10 @@
                             <td>
                                 <%=helper.formatDate(pedido.data)%>
                             </td>
-                            <td>
+                            <td class="<%=pedido.entrega%>">
                                 <%=pedido.entrega%>
                             </td>
-                            <td>
+                            <td class=" <%=pedido.pagamento.metodo%>">
                                 <%=pedido.pagamento.metodo%>
                             </td>
                             <td>
@@ -110,19 +117,29 @@
         document.querySelector('#save').onclick = () => {
             document.querySelector('#contato').submit();
         }
-
-    </script>
-
-    <script>
-        let trs = document.querySelectorAll('tbody.pedidos>tr');
-        for (let tr of trs) {
-            tr.onclick = () => {
-                window.location.href = tr.dataset.url;
+        <% if (info && info.length) { %>
+            document.querySelector('#lolconfirm').onclick = () => {
+                document.querySelector('#confirmlocation').value = true;
+                btns = document.querySelectorAll('input.form-control')
+                for (let input of btns) {
+                    input.disabled = false;
+                }
+                document.querySelector('#contato').submit();
             }
-        }
+                    <% } %>
+
+
+
     </script>
-    <style>
-        .pedidos>tr:hover {
-            cursor: pointer;
-        }
-    </style>
+
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.4.0/mapbox-gl.js"></script>
+    <script>
+        const mapToken = '<%- process.env.MAPBOX_TOKEN %>'
+        const mapdata = <%- JSON.stringify(cliente) %>
+    </script>
+    <script src="/script/mapBox.js"></script>
+
+    <link rel="stylesheet" href="/styles/metodos.css">
+
+    <%- include('../partials/tables')%>
