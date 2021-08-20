@@ -142,7 +142,7 @@ app.use((erro, req, res, next) => {
     res.status(status).render('erro500', { erro })
 
 })
-let port = 5000
+let port = process.env.port || 5000
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
 })
