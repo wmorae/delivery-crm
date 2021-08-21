@@ -31,7 +31,7 @@ const localStrategy = require('passport-local');
 const MongoStore = require('connect-mongo')
 
 const dbUrl = process.env.DB_URL || "'mongodb://localhost:27017/adalto'";
-// const dbUrl = "mongodb+srv:\/\/restbarao1:Q4wh7PKcJH4y1VcF@clusteradalto.3bnro.mongodb.net/adalto?retryWrites=true&w=majority"
+// const dbUrl = "A url aqui pra funcionar no .bat"
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
