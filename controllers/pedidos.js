@@ -38,12 +38,12 @@ const create = async (req, res) => {
          if (cliente._id) {
             let doc = await Cliente.findOneAndUpdate({ _id: cliente._id }, cliente)
         }
-    } else {
+     else {
         let client = new Cliente(cliente)
         doc = await client.save()
         cliente._id = client._id
     }
-
+}
     let now = new Date();
     let today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     let npedidos = await Pedido.find({ data: { $gte: today } })
