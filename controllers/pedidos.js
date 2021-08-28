@@ -13,13 +13,14 @@ const index = async (req, res) => {
     let dataFiltro = new Date(data);
     let pedidos = await Pedido.find({ $and: [{ data: { $gte: dataFiltro } }, { data: { $lt: dataFiltro.addDays(1) } }] })
     pedidos.sort((a, b) => b.numero - a.numero)
-    let pedidosIndex = helper.indexPedidos(pedidos)
+    let produtosTotais = helper.produtosTotais(pedidos)
+    let pagamentosTotais = helper.pagamentosTotais(pedidos)
 
 
     if (req.headers['content-type'] == 'application/json')
         res.send(pedidos)
     else
-        res.render("pedidos/all", { pedidos, data, pedidosIndex });
+        res.render("pedidos/all", { pedidos, data, produtosTotais, pagamentosTotais });
 }
 
 const read = async (req, res) => {
@@ -32,21 +33,21 @@ const read = async (req, res) => {
 
 const create = async (req, res) => {
     const pedido = new Pedido(req.body)
-    const cliente = req.body.cliente
-   
-    if (pedido.entrega == "delivery"){
-         if (cliente._id) {
+    if (pedido.entrega == "delivery") {
+        const cliente = req.body.cliente
+        if (cliente._id) {
             let doc = await Cliente.findOneAndUpdate({ _id: cliente._id }, cliente)
+
+        } else {
+            let client = new Cliente(cliente)
+            doc = await client.save()
+            pedido.cliente._id = client._id
         }
-     else {
-        let client = new Cliente(cliente)
-        doc = await client.save()
-        cliente._id = client._id
     }
-}
+
     let now = new Date();
     let today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    let npedidos = await Pedido.find({ data: { $gte: today } })
+    let npedidos = await Pedido.find({ data: { $gte: today } }, 'numero -_id')
     try {
         npedidos = npedidos.map(x => x.numero).reduce(function (p, v) {
             return (p > v ? p : v);
