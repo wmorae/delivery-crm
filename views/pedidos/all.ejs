@@ -13,6 +13,7 @@
                 <input type="date" name="data" id="data" value="<%=data%>">
                 <button class="btn btn-primary ">Filtrar</button>
             </form>
+
             <% if(pedidos.length){ %>
                 <table class="table table-sm mb-3">
                     <thead>
@@ -75,6 +76,7 @@
                     <h6>Nenhum pedido nessa data...</h6>
                     <% } %>
 
+
         </div>
         <div class="col-lg-8 ">
             <table class="table table-sm table-responsive table-hover ">
@@ -108,6 +110,7 @@
                                 pedido.status
                             </td> -->
                                 <td>
+
                                     <% if(pedido.cliente._id){ %>
                                         <a href="/clientes/<%=pedido.cliente._id%>">
                                             <%=pedido.cliente.nome%>
@@ -115,6 +118,7 @@
                                         <%}else{%>
                                             <%=pedido.cliente.nome%>
                                                 <%}%>
+
 
                                 </td>
                                 <td class="d-none d-lg-block">
