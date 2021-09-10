@@ -9,7 +9,7 @@ const pedidoSchema = new Schema({
     status: String,
     entrega: {
         type: String,
-        enum: ['delivery', 'balcão'],
+        enum: ['delivery', 'balcão','ifood'],
         required: true
     },
     cliente: {
@@ -29,7 +29,7 @@ const pedidoSchema = new Schema({
     }],
     pagamento: {
         _id: false,
-        metodo: String,
+        metodo: { type: String, default: 'pendente' },
         trocopara: { type: Number, required: false },
     }
 }, opts);

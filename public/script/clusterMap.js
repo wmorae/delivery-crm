@@ -1,9 +1,9 @@
 mapboxgl.accessToken = mapToken;
 const map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/light-v10',
+    style: 'mapbox://styles/mapbox/streets-v10',
     center: [-49.2543026804924, -25.526644656553486],
-    zoom: 12
+    zoom: 11.8
 });
 
 map.on('load', () => {
@@ -46,7 +46,7 @@ map.on('load', () => {
         data: clusterData,
         cluster: true,
         clusterMaxZoom: 14, // Max zoom to cluster points on
-        clusterRadius: 18 // Radius of each cluster when clustering points (defaults to 50)
+        clusterRadius: 12 // Radius of each cluster when clustering points (defaults to 50)
     });
 
     map.addLayer({
@@ -64,19 +64,21 @@ map.on('load', () => {
                 'step',
                 ['get', 'point_count'],
                 '#03a9f4',
-                10,
+                5,
                 '#2196f3',
-                30,
-                '#3f51b5'
+                10,
+                '#aaaa00',
+                20,
+                '#ff2155'
             ],
             'circle-radius': [
                 'step',
                 ['get', 'point_count'],
-                15,
                 10,
-                15,
+                10,
+                11,
                 30,
-                15
+                13
             ]
         }
     });
@@ -89,7 +91,7 @@ map.on('load', () => {
         layout: {
             'text-field': '{point_count_abbreviated}',
             'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-            'text-size': 12
+            'text-size': 10
         }
     });
 
@@ -99,10 +101,10 @@ map.on('load', () => {
         source: 'clusterPoints',
         filter: ['!', ['has', 'point_count']],
         paint: {
-            'circle-color': '#11d4fa',
-            'circle-radius': 7,
+            'circle-color': '#00ff00',
+            'circle-radius': 5,
             'circle-stroke-width': 3,
-            'circle-stroke-color': '#bababa'
+            'circle-stroke-color': '#5555ff'
         }
     });
 

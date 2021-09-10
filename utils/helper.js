@@ -37,8 +37,34 @@ Date.prototype.addDays = function (days) {
     date.setDate(date.getDate() + days);
     return date;
 }
+String.prototype.capitalize = function () {
 
-let resumoPedidos = function (pedidos) {
+    const arr = this.valueOf().toLowerCase().split(" ");
+
+    for (var i = 0; i < arr.length; i++) {
+        arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+
+    }
+
+    return arr.join(" ");
+}
+
+const paginate = function( arr,n=arr.length){
+    let arr2 = []
+    let arr3 = [...arr]
+    if (n>arr.length)
+        n=arr.length
+    let m = Math.floor(arr.length / n)
+    let l = arr.length % n
+    for(let i =0; i<n; i++){
+        let j = m;
+        i<l && j++
+        arr2.push(arr3.splice(0,j))
+    }    
+    return arr2
+}
+
+let produtosTotais = function (pedidos) {
     let arr = []
     for (let pedido of pedidos) {
         for (let item of pedido.itens) {
@@ -57,10 +83,30 @@ let resumoPedidos = function (pedidos) {
     // arr.sort((a, b) => b.qty - a.qty)
     return arr
 }
+let pagamentosTotais = function (pedidos) {
+    let arr = []
+    for (let pedido of pedidos) {
+        if (arr[pedido.pagamento.metodo]) {
+            arr[pedido.pagamento.metodo] += pedido.pagamento.total
+        }
+        else {
+            arr[pedido.pagamento.metodo] = pedido.pagamento.total
+        }
+
+
+    }
+
+    arr.entregas = pedidos.map(i => i.cliente.frete).reduce((total, num) => total + num, 0)
+    arr.total = Object.values(arr).reduce((total, num) => total + num, 0)
+    //arr.sort((a, b) => a<b? a : b)
+    return arr
+}
 
 module.exports = {
     formatDate: formatDate,
     formatDate2: formatDate2,
     formatHour: formatHour,
-    indexPedidos: resumoPedidos
+    produtosTotais: produtosTotais,
+    pagamentosTotais: pagamentosTotais,
+    paginate:paginate
 };
