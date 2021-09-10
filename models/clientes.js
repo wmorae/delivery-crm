@@ -8,6 +8,10 @@ const clientSchema = new Schema({
     frete: Number,
     telefone: String,
     endereco: String,
+    pedidos: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Pedido'
+    }],
     geometry: {
         type: {
             type: String,

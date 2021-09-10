@@ -37,8 +37,19 @@ Date.prototype.addDays = function (days) {
     date.setDate(date.getDate() + days);
     return date;
 }
+String.prototype.capitalize = function () {
 
-let resumoPedidos = function (pedidos) {
+    const arr = this.valueOf().split(" ");
+
+    for (var i = 0; i < arr.length; i++) {
+        arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+
+    }
+
+    return arr.join(" ");
+}
+
+let produtosTotais = function (pedidos) {
     let arr = []
     for (let pedido of pedidos) {
         for (let item of pedido.itens) {
@@ -57,10 +68,29 @@ let resumoPedidos = function (pedidos) {
     // arr.sort((a, b) => b.qty - a.qty)
     return arr
 }
+let pagamentosTotais = function (pedidos) {
+    let arr = []
+    for (let pedido of pedidos) {
+        if (arr[pedido.pagamento.metodo]) {
+            arr[pedido.pagamento.metodo] += pedido.pagamento.total
+        }
+        else {
+            arr[pedido.pagamento.metodo] = pedido.pagamento.total
+        }
+
+
+    }
+
+    arr.entregas = pedidos.map(i => i.cliente.frete).reduce((total, num) => total + num, 0)
+    arr.total = Object.values(arr).reduce((total, num) => total + num, 0)
+    //arr.sort((a, b) => a<b? a : b)
+    return arr
+}
 
 module.exports = {
     formatDate: formatDate,
     formatDate2: formatDate2,
     formatHour: formatHour,
-    indexPedidos: resumoPedidos
+    produtosTotais: produtosTotais,
+    pagamentosTotais: pagamentosTotais
 };
