@@ -9,7 +9,7 @@ const pedidoSchema = new Schema({
     data: Date,
     entrega: {
         type: String,
-        enum: ['delivery', 'balcão'],
+        enum: ['delivery', 'balcão','ifood'],
         required: true
     },
     cliente: {

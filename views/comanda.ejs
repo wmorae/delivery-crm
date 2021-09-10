@@ -16,7 +16,7 @@
                     <%=pedido.cliente.nome%>
 
                 </h6>
-                <% if(pedido.entrega=="delivery" ) {%>
+                <% if(pedido.entrega!="balcao" ) {%>
                     <h6>
                         <%=pedido.cliente.telefone%>
                     </h6>
@@ -74,32 +74,34 @@
                                     </td>
                                 </tr>
                             </tbody>
-                        </table>
-                        <hr>
-
-                        <h4>
-                            <%=pedido.pagamento.metodo%>
-                        </h4>
-                        <%if(pedido.pagamento.trocopara){%>
-                            <table>
-                                <tr>
-                                    <td>
-                                        Troco para
-                                    </td>
-                                    <td class="fw-bold">
-                                        R$<%=pedido.pagamento.trocopara%>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Troco
-                                    </td>
-                                    <td class="fw-bold">
-                                        R$<%=pedido.pagamento.troco%>
-                                    </td>
-                                </tr>
-                            </table>
+                        </table>                        
+                        <% if(pedido.pagamento.metodo!="Em Aberto" ){ %>
+                            <hr>
+                            <h4>
+                                <%=pedido.pagamento.metodo%>
+                            </h4>
                             <%}%>
+
+                                <%if(pedido.pagamento.trocopara){%>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                Troco para
+                                            </td>
+                                            <td class="fw-bold">
+                                                R$<%=pedido.pagamento.trocopara%>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Troco
+                                            </td>
+                                            <td class="fw-bold">
+                                                R$<%=pedido.pagamento.troco%>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <%}%>
 
             </div>
         </div>
