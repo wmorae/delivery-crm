@@ -38,7 +38,6 @@ Date.prototype.addDays = function (days) {
     return date;
 }
 String.prototype.capitalize = function () {
-
     const arr = this.valueOf().toLowerCase().split(" ");
 
     for (var i = 0; i < arr.length; i++) {
@@ -63,7 +62,6 @@ const paginate = function( arr,n=arr.length){
     }    
     return arr2
 }
-
 let produtosTotais = function (pedidos) {
     let arr = []
     for (let pedido of pedidos) {

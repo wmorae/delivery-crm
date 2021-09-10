@@ -33,6 +33,7 @@ const read = async (req, res) => {
 
 const create = async (req, res) => {
     const pedido = new Pedido(req.body)
+    
     if (pedido.entrega != "balcao") {
         const cliente = req.body.cliente
         if (cliente._id) {
@@ -59,7 +60,6 @@ const create = async (req, res) => {
 
     pedido.data = now
     pedido.numero = npedidos + 1
-    pedido.status = "pendente"
     const { id } = await pedido.save()
 
     req.flash('success', 'Pedido criado com sucesso!')
