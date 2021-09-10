@@ -59,7 +59,6 @@ const create = async (req, res) => {
 
     pedido.data = now
     pedido.numero = npedidos + 1
-    pedido.status = "pendente"
     const { id } = await pedido.save()
 
     req.flash('success', 'Pedido criado com sucesso!')

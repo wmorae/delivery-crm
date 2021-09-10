@@ -28,8 +28,8 @@ const create = async (req, res) => {
 }
 const read = async (req, res) => {
     const { id } = req.params
-    const cliente = await Cliente.findById(id);
-    const pedidos = await Pedido.find({ 'cliente.telefone': cliente.telefone });
+    const cliente = await Cliente.findById(id).populate('pedidos');
+    console.log(cliente)
 
     if (cliente.geometry.coordinates == false) {
         const geoData = await geocoder.forwardGeocode({
@@ -42,8 +42,8 @@ const read = async (req, res) => {
     }
 
 
-    pedidos.sort((a, b) => b.data - a.data)
-    res.render("clientes/cliente", { cliente, pedidos, info: req.flash('info') });
+    //pedidos.sort((a, b) => b.data - a.data)
+    res.render("clientes/cliente", { cliente, info: req.flash('info') });
 }
 const update = async (req, res) => {
     const { id } = req.params;
