@@ -34,7 +34,7 @@ const read = async (req, res) => {
 const create = async (req, res) => {
     const pedido = new Pedido(req.body)
     
-    if (pedido.entrega != "balcao") {
+    if (pedido.entrega != "balcão") {
         const cliente = req.body.cliente
         if (cliente._id) {
             let doc = await Cliente.findOneAndUpdate({ _id: cliente._id }, cliente)
