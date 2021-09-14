@@ -75,7 +75,7 @@
                                 </tr>
                             </tbody>
                         </table>                        
-                        <% if(pedido.pagamento.metodo!="Em Aberto" ){ %>
+                        <% if(pedido.pagamento.metodo!="pendente" ){ %>
                             <hr>
                             <h4>
                                 <%=pedido.pagamento.metodo%>
