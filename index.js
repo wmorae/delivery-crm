@@ -93,7 +93,6 @@ passport.deserializeUser(Usuario.deserializeUser());
 
 app.use((req, res, next) => {
     res.locals.user = req.user;
-    // console.log(req.user)
     res.locals.helper = helper
     res.locals.success = req.flash('success')
     res.locals.error = req.flash('error')

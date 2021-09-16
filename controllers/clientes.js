@@ -29,7 +29,6 @@ const create = async (req, res) => {
 const read = async (req, res) => {
     const { id } = req.params
     const cliente = await Cliente.findById(id).populate('pedidos');
-    console.log(cliente)
 
     if (cliente.geometry.coordinates == false) {
         const geoData = await geocoder.forwardGeocode({

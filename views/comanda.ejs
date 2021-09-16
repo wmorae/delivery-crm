@@ -63,11 +63,13 @@
                                     <td>R$<%=pedido.pagamento.subtotal%>
                                     </td>
                                 </tr>
+                                <% if(pedido.entrega!="balcão" ){ %> 
                                 <tr>
                                     <th>Taxa entrega:</th>
                                     <td>R$<%=pedido.cliente.frete%>
                                     </td>
                                 </tr>
+                                <% } %> 
                                 <tr>
                                     <th>Total:</th>
                                     <td>R$<%=pedido.pagamento.total%>
