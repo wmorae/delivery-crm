@@ -8,7 +8,6 @@
 
 
             <div class="d-flex justify-content-evenly p-3">
-
                 <input type="radio" class="btn-check" name="entrega" id="balcao" autocomplete="off" value="balcão"
                     required>
                 <label class="btn btn-outline-success btn-lg" for="balcao">Balcão</label>
@@ -49,7 +48,7 @@
                 <div class="input-group mb-3">
                     <span class="input-group-text">Frete</span>
                     <span class="input-group-text">R$</span>
-                    <input class="form-control" step="0.01" disabled type="number" id="frete" name="cliente[frete]"
+                    <input class="form-control" step="0.01" disabled min="0" value="0" type="number" id="frete" name="cliente[frete]"
                         placeholder="Preço frete">
                 </div>
                 <input type="hidden" id="id" name="cliente[_id]" disabled>
@@ -60,9 +59,7 @@
                 <div class="d-flex flex-column">
                     <input type="radio" class="btn-check" name="pagamento[metodo]" id="dinheiro" value="dinheiro">
                     <label class="btn btn-outline-success " for="dinheiro">Dinheiro</label>
-
                     <button class="btn btn-outline-success btn-sm mt-1 d-none" id="troco" type="button">Troco</button>
-
                     <div class="input-group mb-3 d-none mt-1">
                         <!-- <span class="input-group-text">R$</span> -->
                         <input type="number" step="0.01" min="1" max="200" disabled name="pagamento[trocopara]"

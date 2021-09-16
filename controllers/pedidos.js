@@ -33,7 +33,6 @@ const read = async (req, res) => {
 
 const create = async (req, res) => {
     const pedido = new Pedido(req.body)
-    
     if (pedido.entrega != "balcão") {
         const cliente = req.body.cliente
         if (cliente._id) {
@@ -44,6 +43,8 @@ const create = async (req, res) => {
             doc = await client.save()
             pedido.cliente._id = client._id
         }
+    } else {
+        pedido.cliente._id = undefined
     }
 
     let now = new Date();
