@@ -58,23 +58,25 @@
                         <hr>
                         <table>
                             <tbody class="text-start">
-                                <tr>
-                                    <th>Total itens:</th>
-                                    <td>R$<%=pedido.pagamento.subtotal%>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Taxa entrega:</th>
-                                    <td>R$<%=pedido.cliente.frete%>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Total:</th>
-                                    <td>R$<%=pedido.pagamento.total%>
-                                    </td>
-                                </tr>
+                                <% if(pedido.entrega!="balcão" ){ %>
+                                    <tr>
+                                        <th>Total itens:</th>
+                                        <td>R$<%=pedido.pagamento.subtotal%>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Taxa entrega:</th>
+                                        <td>R$<%=pedido.cliente.frete%>
+                                        </td>
+                                    </tr>
+                                    <% } %>
+                                        <tr>
+                                            <th>Total:</th>
+                                            <td>R$<%=pedido.pagamento.total%>
+                                            </td>
+                                        </tr>
                             </tbody>
-                        </table>                        
+                        </table>
                         <% if(pedido.pagamento.metodo!="pendente" ){ %>
                             <hr>
                             <h4>

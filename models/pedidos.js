@@ -9,7 +9,7 @@ const pedidoSchema = new Schema({
     data: Date,
     entrega: {
         type: String,
-        enum: ['delivery', 'balcão','ifood'],
+        enum: ['delivery', 'balcão', 'ifood'],
         required: true
     },
     cliente: {
@@ -28,7 +28,11 @@ const pedidoSchema = new Schema({
         desc: String,
         prot: String,
         obs: String,
-        valor: Number
+        valor:
+        {
+            type: Number,
+            min: 0
+        }
     }],
     pagamento: {
         _id: false,

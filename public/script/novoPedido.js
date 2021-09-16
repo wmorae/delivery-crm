@@ -119,7 +119,7 @@ let comandaAdd = function (item, preco = 0) {
                                     <input name="itens[${i}][obs]" style="width:50%" type="text" class="form-control obs"
                                         placeholder="Observações"  onClick="this.select();" value="Completa">
                                     <span class="input-group-text mb-8">R$</span>
-                                    <input name="itens[${i}][valor]" type="number" step="0.01" min="0" class="form-control preco">
+                                    <input name="itens[${i}][valor]" type="number" required step="0.01" min="0" class="form-control preco">
                                 </div>
 
                             </div>
@@ -167,7 +167,8 @@ document.querySelector("#m_o").onclick = () => comandaAdd('Outros')
 
 document.querySelectorAll(".delivery").forEach(x => x.onclick = () => {
     document.querySelectorAll(".contato-info input:not(#id)").forEach(el => {
-        el.required = true
+        if (el.id != "telefone")
+            el.required = true
         el.disabled = false
     })
     document.querySelectorAll("div.contato-info").forEach(div => div.classList.remove("d-none"));

@@ -1,6 +1,6 @@
 <% layout('layouts/boilerplate')%>
     <script>
-        let pedidos = <%- JSON.stringify(pedidos) %>
+        let pedidos = <% - JSON.stringify(pedidos) %>
     </script>
     <link rel="stylesheet" href="/styles/metodos.css">
     <div class="row">
@@ -13,69 +13,69 @@
                 <input type="date" name="data" id="data" value="<%=data%>">
                 <button class="btn btn-primary ">Filtrar</button>
             </form>
-            <% if(pedidos.length){ %> 
-            <table class="table table-sm mb-3">
-                <thead>
-                    <tr>
-                        <th colspan="100%">
-                            Totais por produto
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>Produto</th>
-                        <th>Qty</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% for(let i in produtosTotais){ %>
+            <% if(pedidos.length){ %>
+                <table class="table table-sm mb-3">
+                    <thead>
                         <tr>
-                            <th>
-                                <%=i.capitalize()%>
+                            <th colspan="100%">
+                                Totais por produto
                             </th>
-                            <td>
-                                <%=produtosTotais[i].qty %>
-                            </td>
-                            <td>
-                                R$<%=produtosTotais[i].valor.toFixed(2) %>
-                            </td>
-
                         </tr>
-                        <% } %>
-                </tbody>
-            </table>
-
-            <table class="table table-sm mb-3">
-                <thead>
-                    <tr>
-                        <th colspan="100%">
-                            Totais por Metodo de Pagamento
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>Metodo</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% for(let i in pagamentosTotais){ %>
                         <tr>
-                            <th>
-                                <%=i.capitalize()%>
-                            </th>
-                            <td>
-                                R$<%=pagamentosTotais[i].toFixed(2) %>
-                            </td>
-
+                            <th>Produto</th>
+                            <th>Quantidade</th>
+                            <th>Total</th>
                         </tr>
-                        <% } %>
-                </tbody>
-            </table>
-            <% } else{%>
-                <h6>Nenhum Pedido Localizado...</h6> 
-                <% } %> 
+                    </thead>
+                    <tbody>
+                        <% for(let i in produtosTotais){ %>
+                            <tr>
+                                <th>
+                                    <%=i.capitalize()%>
+                                </th>
+                                <td>
+                                    <%=produtosTotais[i].qty %>
+                                </td>
+                                <td>
+                                    R$<%=produtosTotais[i].valor.toFixed(2)%>
+                                </td>
+
+                            </tr>
+                            <% } %>
+                    </tbody>
+                </table>
+
+                <table class="table table-sm mb-3">
+                    <thead>
+                        <tr>
+                            <th colspan="100%">
+                                Totais por Metodo de Pagamento
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>Metodo</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for(let i in pagamentosTotais){ %>
+                            <tr>
+                                <th>
+                                    <%=i.capitalize()%>
+                                </th>
+                                <td>
+                                    R$<%=pagamentosTotais[i].toFixed(2) %>
+                                </td>
+
+                            </tr>
+                            <% } %>
+                    </tbody>
+                </table>
+                <% } else{%>
+                    <h6>Nenhum Pedido Localizado...</h6>
+                    <% } %>
         </div>
-        
+
         <div class="col-lg-8 ">
 
             <table class="table table-sm table-responsive table-hover ">
@@ -119,7 +119,7 @@
 
                                 </td>
                                 <td class="d-none d-lg-block">
-                                    <%if(pedido.entrega=="delivery"){%>
+                                    <%if(pedido.cliente.telefone){%>
                                         <a
                                             href="whatsapp://send?phone=55<%=pedido.cliente.telefone%>&text=Oi+<%=pedido.cliente.nome.capitalize()%>">
                                             <%=pedido.cliente.telefone%>
