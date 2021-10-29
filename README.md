@@ -29,7 +29,7 @@ Gerenciamento e fechamento do Caixa
 
 Impressão de comandas
 
-![image](https://user-images.githubusercontent.com/80791384/139443596-ba7671ee-9452-4184-834b-3428a609e6c1.png)
+![image](https://user-images.githubusercontent.com/80791384/139446112-54b18d00-b3c3-4109-aaba-0eaac3b2650a.png)
 
 
 
