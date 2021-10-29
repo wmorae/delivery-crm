@@ -1,6 +1,8 @@
 # delivery-crm
 Projeto de Gestão de comandas e clientes para Restaurante local desenvolvida com a stack MEAN em cloud.
 
+Features:
+
 Design Responsivo
 
 ![image](https://user-images.githubusercontent.com/80791384/139443783-013d02dc-b2ae-4cd6-852f-8b3522be4760.png)
@@ -25,7 +27,7 @@ Gestão de clientes Geograficamente
 
 Gerenciamento e fechamento do Caixa 
 
-![image](https://user-images.githubusercontent.com/80791384/139443439-8e798e42-640f-4380-97f1-f68a221e0bcf.png)
+![image](https://user-images.githubusercontent.com/80791384/139452846-0b4a8e6b-4002-4949-b923-fe9d809f5e7d.png)
 
 Impressão de comandas
 
