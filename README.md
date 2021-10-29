@@ -22,16 +22,16 @@ Criação de Pedidos
 
 Gestão de clientes Geograficamente
 
-![image](https://user-images.githubusercontent.com/80791384/139443239-80bc977e-68fb-40b3-84cf-9458fa54588b.png)
-![image](https://user-images.githubusercontent.com/80791384/139442988-ed0e9d6f-0a14-4836-bdaa-3c93983c3a3e.png)
+![image](https://user-images.githubusercontent.com/80791384/139465173-591fc81a-444f-4f94-83a1-c6335d041ec0.png)
+![image](https://user-images.githubusercontent.com/80791384/139465523-852aea5e-72bc-4231-ac28-9984a038d7db.png)
 
 Gerenciamento e fechamento do Caixa 
 
-![image](https://user-images.githubusercontent.com/80791384/139452846-0b4a8e6b-4002-4949-b923-fe9d809f5e7d.png)
+![image](https://user-images.githubusercontent.com/80791384/139464038-68e21e6d-9c86-45a1-80d1-28da1e3524a6.png)
 
 Impressão de comandas
 
-![image](https://user-images.githubusercontent.com/80791384/139446112-54b18d00-b3c3-4109-aaba-0eaac3b2650a.png)
+![image](https://user-images.githubusercontent.com/80791384/139464580-6f574434-1edd-418a-98a6-f753409a6188.png)
 
 
 
