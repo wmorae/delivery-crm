@@ -24,14 +24,11 @@ let addcontato = function (contato) {
         document.querySelector("#frete").value = contato.frete;
         document.querySelector("#id").disabled = false
         document.querySelector("#id").value = contato._id;
-        // document.querySelectorAll("div.contato-info").forEach(div => div.classList.remove("d-none"));
     }
     dropdown.append(item)
 
 }
 
-//additem('<a class="dropdown-item" id="novocontato" type="button"><span class="p-1">+ Novo Contato</span></a>', true);
-// additem('    <hr class="dropdown-divider">', false);
 let y = async function () {
     let el = document.querySelector('#q');
     for (let e of document.querySelectorAll(".dropdown-menu > li .contato")) {
@@ -72,19 +69,6 @@ document.querySelector('#q').onblur = () => {
     setTimeout(() => dropdown.classList.remove("show"), 350);
 };
 
-// document.querySelector("#edit").onclick = function () {
-//     this.disabled = true;
-//     document.querySelectorAll(".contato-info  input").forEach(input => input.disabled = false)
-// }
-/* document.querySelector("#novocontato").onclick = function () {
-     //document.querySelectorAll("div.contato-info").forEach(div => div.classList.remove("d-none"));
-     document.querySelector("#q").placeholder = "Nome e sobrenome";
-     document.querySelector("#telefone").value = 41;
-     document.querySelector("#edit").onclick();
- 
- }*/
-// let comandaitem = document.querySelector(".pedido").cloneNode(true);
-// document.querySelector(".pedido").remove();
 let i = 0;
 let comandaAdd = function (item, preco = 0) {
     let template = `<div class="pedido card p-2 d-flex flex-row flex-nowrap justify-content-evenly">
@@ -160,10 +144,6 @@ document.querySelector("#m_g").onclick = () => comandaAdd('Marmita G', 15)
 document.querySelector("#buf").onclick = () => comandaAdd('Buffet', 11.90)
 document.querySelector("#m_o").onclick = () => comandaAdd('Outros')
 
-// document.querySelector("#fechar").onclick = () => {
-//     document.querySelector('form').onsubmit() 
-//     // document.querySelectorAll(".contato-info input").forEach(el => el.disabled = false)
-// }
 
 document.querySelectorAll(".delivery").forEach(x => x.onclick = () => {
     document.querySelectorAll(".contato-info input:not(#id)").forEach(el => {
